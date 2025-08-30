@@ -1,26 +1,8 @@
-"""
-AI Buddy - Minimal Working Setup
---------------------------------
-Steps to run:
-1. Make sure required packages are installed:
-   pip install torch transformers gradio PyPDF2 accelerate bitsandbytes xformers
-
-2. Run this script. It will launch a Gradio UI for chatting with AI Buddy.
-"""
-
 import os
 import torch
 import gradio as gr
 from transformers import AutoTokenizer, AutoModelForCausalLM
-
-# ----------------------------------------------------
-# 1. Environment setup
-# ----------------------------------------------------
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-
-# ----------------------------------------------------
-# 2. GPU check
-# ----------------------------------------------------
 if torch.cuda.is_available():
     device = "cuda"
     gpu_name = torch.cuda.get_device_name(0)
@@ -28,10 +10,6 @@ if torch.cuda.is_available():
 else:
     device = "cpu"
     print("🐌 No GPU found, using CPU (slower but still works).")
-
-# ----------------------------------------------------
-# 3. AI Buddy Class
-# ----------------------------------------------------
 class AIBuddy:
     def __init__(self, model_name="ibm-granite/granite-3.2b-instruct"):
         self.model_name = model_name
@@ -58,11 +36,9 @@ class AIBuddy:
             )
             self.model.eval()
 
-            # Ensure pad token exists
             if self.tokenizer.pad_token is None:
                 self.tokenizer.pad_token = self.tokenizer.eos_token
 
-            # Try compiling (only if supported)
             try:
                 self.model = torch.compile(self.model, mode="reduce-overhead")
             except Exception:
@@ -97,16 +73,8 @@ class AIBuddy:
         response_ids = outputs[0][prompt_len:]
         response = self.tokenizer.decode(response_ids, skip_special_tokens=True)
         return response.strip()
-
-# ----------------------------------------------------
-# 4. Initialize Buddy
-# ----------------------------------------------------
 buddy = AIBuddy()
 buddy.wake_up()
-
-# ----------------------------------------------------
-# 5. Gradio Chat Interface
-# ----------------------------------------------------
 def chat_with_buddy(user_input, history=[]):
     reply = buddy.chat(user_input)
     history.append((user_input, reply))
@@ -123,13 +91,10 @@ with gr.Blocks() as app:
 
     msg.submit(respond, [msg, chatbot], [chatbot, chatbot])
     clear.click(lambda: None, None, chatbot, queue=False)
-
-# ----------------------------------------------------
-# 6. Launch the App
-# ----------------------------------------------------
 app.launch(
     share=True,
     server_name="0.0.0.0",
     server_port=7860,
     enable_queue=True
 )
+
