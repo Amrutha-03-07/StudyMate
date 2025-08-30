@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyMate - Your Study Buddy</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #f8fbff;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    }
+    .container {
+      width: 85%;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      font-size: 17px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+      color: #222;
+    }
+    .upload input, .question-box input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-bottom: 15px;
+      transition: 0.3s;
+    }
+    .upload input:hover, .question-box input:focus {
+      border-color: #6a11cb;
+      outline: none;
+      box-shadow: 0px 0px 10px rgba(106, 17, 203, 0.3);
+    }
+    .btn {
+      background: #6a11cb;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #4f0fa3;
+    }
+    .answer, .sources {
+      margin-top: 25px;
+      padding: 18px;
+      border-left: 5px solid #6a11cb;
+      background: #faf7ff;
+      border-radius: 10px;
+    }
+    .answer p, .sources p {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+    small {
+      display: block;
+      margin-top: -10px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      color: #555;
+    }
+    .emoji {
+      font-size: 18px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>🌟 StudyMate — Your Friendly Study Buddy</header>
+
+  <div class="container">
+    <!-- Upload PDFs -->
+    <div class="upload">
+      <label><span class="emoji">📂</span> Hey! Drop in your study PDFs here:</label>
+      <input type="file" multiple accept=".pdf">
+      <small>✨ You can upload textbooks, notes, or research papers — I’ll read them for you!</small>
+    </div>
+
+    <!-- Ask a Question -->
+    <div class="question-box">
+      <label><span class="emoji">💭</span> What’s on your mind?</label>
+      <input type="text" id="question" placeholder="e.g. Can you explain Newton’s 3rd Law?">
+      <small>Tip: Ask me anything from your uploaded materials. I’ll keep it simple and clear 💡</small>
+    </div>
+
+    <button class="btn" onclick="getAnswer()">🚀 Ask StudyMate</button>
+
+    <!-- Display Answer -->
+    <div class="answer" id="answer">
+      <b>🤓 Answer:</b>
+      <p>I’m ready! Upload a PDF and ask me a question — I’ll do my best to help 🎓</p>
+    </div>
+
+    <!-- Display Sources -->
+    <div class="sources" id="sources">
+      <b>📖 Where I found it:</b>
+      <p>Once I’m connected to my brain (the backend!), I’ll show you the exact parts of your PDFs I used 📝</p>
+    </div>
+  </div>
+
+  <script>
+    function getAnswer() {
+      const question = document.getElementById("question").value;
+      const answerBox = document.getElementById("answer");
+      const sourcesBox = document.getElementById("sources");
+
+      if (question.trim() === "") {
+        alert("⚠️ Oops! You forgot to ask me a question.");
+        return;
+      }
+
+      // Friendly placeholder answer
+      answerBox.innerHTML = "<b>🤓 Answer:</b><p>Great question! Here’s my take on: <i>‘" + question + "’</i>. (Backend connection coming soon 🎉)</p>";
+      sourcesBox.innerHTML = "<b>📖 Where I found it:</b><p>I’ll highlight the right parts of your PDFs here once I’m hooked up 🪄</p>";
+    }
+  </script>
+</body>
+</html>
